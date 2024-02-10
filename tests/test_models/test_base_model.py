@@ -4,24 +4,24 @@ Test base model class
 '''
 
 import unittest
-from models.base_model import BaseeModel
+from models.base_model import BaseModel as bs
 
 
 class TestBaseModel(unittest.TestCase):
-    def tst_init(self):
-        mdl = BaseeModel()
+    def test_init(self):
+        mdl = bs()
         self.assertIsNotNone(mdl.id)
         self.assertIsNotNone(mdl.created_at)
         self.assertIsNotNone(mdl.updated_at)
 
-    def tst_save(self):
-        mdl = BaseeModel()
+    def test_save(self):
+        mdl = bs()
         first_up = mdl.updated_at
         new_up = mdl.save()
         self.assertNotEquals(first_up, new_up)
 
-    def tst_dict(self):
-        mdl = BaseeModel()
+    def test_dict(self):
+        mdl = bs()
         mdldic = mdl.to_dict()
         self.assertIsInstance(mdldic, dict)
         self.assertEquals(mdldic["__clase__"], "BaseeModel")
@@ -29,8 +29,8 @@ class TestBaseModel(unittest.TestCase):
         self.assertEquals(mdldic["created_at"], mdl.created_at.isoformat())
         self.assertEquals(mdldic["updated_at"], mdl.updated_at.isoformat())
 
-    def tst_str(self):
-        mdl = BaseeModel()
+    def test_str(self):
+        mdl = bs()
         self.assertTrue(str(mdl).startswith("['BaseeModel']"))
         self.assertIn(mdl.id, str(mdl))
         self.assertIn(str(mdl.__dict__), str(mdl))

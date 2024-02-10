@@ -1,53 +1,49 @@
-#!/usr/bin/pyhton3
+#!/usr/bin/python3
 '''
-Parent class to all other classes
+base class
 '''
 
-import uuid as ud
+
+from models import storage as st
+from uuid import uuid4 as ud
 from datetime import datetime as dt
 
+class BaseModel:
+    """Class BaseModel"""
 
-class BaseeModel:
-    def __init__(self):
-        self.id = str(ud.uuid4())
-        self.created_at = dt.utcnow()
-        self.updated_at = dt.utcnow()
+    def __init__(self, *args, **kwargs):
 
-    def save(self):
-        '''
-        Updated updated at
-        '''
-
-        self.updated_at = dt.utcnow()
+        if kwargs:
+            for k, val in kwargs.items():
+                if k != '__class__':
+                    if k == 'updated_at' or k == 'created_at':
+                        self.__dict__[k] = dt.fromisoformat(val)
+                    else:
+                        self.__dict__[k] = val
+        else:
+            self.id = str(ud())
+            self.created_at = dt.now()
+            self.updated_at = dt.now()
+            st.new(self)
 
     def to_dict(self):
-        '''
-        get the dictinary of the class
-        :return: dict to the values
-        '''
-        dict = self.__dict__.copy()
-        dict["__clase__"] = self.__class__.__name__
-        dict["created_at"] = self.created_at.isoformat()
-        dict["updated_at"] = self.updated_at.isoformat()
-        return dict
+        """returns a dictionary of values"""
+
+        dicto = dict(self.__dict__)
+        dicto['__class__'] = self.__class__.__name__
+        dicto['created_at'] = \
+            dt.isoformat(dicto.get('created_at'))
+        dicto['updated_at'] = \
+            dt.isoformat(dicto.get('updated_at'))
+        return dicto
 
     def __str__(self):
-        '''
-        :return: string of that class
-        '''
-        cls_name = self.__class__.__name__
-        return "[{}] ({}) {}".format(cls_name, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
+    def save(self):
+        """update instance"""
 
-if __name__ == "__main__":
-    mdl = BaseeModel()
-    mdl.name = "my first model"
-    mdl.num = 89
-    print(mdl)
-    mdl.save()
-    print(mdl)
-    mdljs = mdl.to_dict()
-    print(mdljs)
-    print("sdsds")
-    for key in mdljs.keys():
-        print(key)
+        self.updated_at = dt.now()
+        st.new(self)
+        st.save()
+

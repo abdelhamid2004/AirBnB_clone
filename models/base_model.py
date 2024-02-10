@@ -8,6 +8,7 @@ from models import storage as st
 from uuid import uuid4 as ud
 from datetime import datetime as dt
 
+
 class BaseModel:
     """Class BaseModel"""
 
@@ -38,7 +39,8 @@ class BaseModel:
         return dicto
 
     def __str__(self):
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        nm = self.__class__.__name__
+        return "[{}] ({}) {}".format(nm, self.id, self.__dict__)
 
     def save(self):
         """update instance"""
@@ -46,4 +48,3 @@ class BaseModel:
         self.updated_at = dt.now()
         st.new(self)
         st.save()
-

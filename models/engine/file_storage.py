@@ -4,6 +4,7 @@
 
 import json as js
 
+
 class FileStorage:
     """json file"""
 

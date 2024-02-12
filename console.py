@@ -16,7 +16,7 @@ from models import storage as st
 
 class HBNBCommand(cmd.Cmd):
     """commands class """
-    pmt = "(hbnb) "
+    prompt = "(hbnb) "
     classes_list = ["BaseModel", "User",
                     "City", "State", "Amenity", "Review", "Place"]
 

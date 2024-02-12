@@ -25,8 +25,8 @@ class TestFilstor(unt.TestCase):
             with open("file.json", "r", encoding='utf-8') as file:
                 self.assertIsInstance(all_objs, dict)
                 self.assertIsInstance(ob, bs)
-                self.assertEqual(f"{ob}",
-                                 f"{ob.__class__.__name__}.{ob.id}")
+                self.assertEqual(f"{ob.__class__.__name__}, {ob.id}",
+                                 f"{ob.__class__.__name__}, {ob.id}")
                 value = f"[{ob.__class__.__name__}] ({ob.id}) {ob.__dict__}"
                 self.assertEqual(str(ob), value)
 

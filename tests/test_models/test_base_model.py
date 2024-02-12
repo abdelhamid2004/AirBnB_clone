@@ -24,14 +24,14 @@ class TestBaseModel(unittest.TestCase):
         mdl = bs()
         mdldic = mdl.to_dict()
         self.assertIsInstance(mdldic, dict)
-        self.assertEquals(mdldic["__class__"], "BaseeModel")
+        self.assertEquals(mdldic["__class__"], "BaseModel")
         self.assertEquals(mdldic["id"], mdl.id)
         self.assertEquals(mdldic["created_at"], mdl.created_at.isoformat())
         self.assertEquals(mdldic["updated_at"], mdl.updated_at.isoformat())
 
     def test_str(self):
         mdl = bs()
-        self.assertTrue(str(mdl).startswith("'[BaseeModel]'"))
+        self.assertTrue(str(mdl).startswith("['BaseModel']"))
         self.assertIn(mdl.id, str(mdl))
         self.assertIn(str(mdl.__dict__), str(mdl))
 

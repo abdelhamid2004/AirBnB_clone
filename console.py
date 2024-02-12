@@ -4,13 +4,13 @@
 
 import cmd
 import sys
-from models.base_model import BaseModel as bs
-from models.user import User as us
-from models.city import City as ci
-from models.state import State as sta
-from models.amenity import Amenity as am
-from models.review import Review as re
-from models.place import Place as pl
+from models.base_model import BaseModel
+from models.user import User
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
+from models.review import Review
+from models.place import Place
 from models import storage as st
 
 
@@ -20,7 +20,7 @@ class HBNBCommand(cmd.Cmd):
     classes_list = ["BaseModel", "User",
                     "City", "State", "Amenity", "Review", "Place"]
 
-    def update(self, line):
+    def do_update(self, line):
         """Updates an instance"""
 
         line_list = line.split(" ")
@@ -58,23 +58,23 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
-    def emtylne(self):
+    def emptyline(self):
         """ execute anything"""
 
         pass
 
-    def EOF(self, line):
+    def do_EOF(self, line):
         """command to exit the program"""
 
         print()
         return True
 
-    def quit(self, line):
+    def do_quit(self, line):
         """command to exit the program"""
 
         return True
 
-    def create(self, line):
+    def do_create(self, line):
         """ new instance"""
 
         if line:
@@ -87,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
-    def show(self, line):
+    def do_show(self, line):
         """string representation of \
             an instance"""
 
@@ -110,7 +110,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
-    def destroy(self, line):
+    def do_destroy(self, line):
         """Deletes an instance"""
 
         if line:
@@ -133,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
-    def all(self, line):
+    def do_all(self, line):
         """all string representation
            """
 
@@ -173,11 +173,11 @@ class HBNBCommand(cmd.Cmd):
 
             elif method[:6] == "show(\"" and method[-2:] == "\")":
                 line = f"{cls} {method[6:-2]}"
-                self.show(line)
+                self.do_show(line)
 
             elif method[:9] == "destroy(\"" and method[-2:] == "\")":
                 line = f"{cls} {method[9:-2]}"
-                self.destroy(line)
+                self.do_destroy(line)
 
             elif method[:8] == "update(\"" and method[-1] == ")":
                 args = method[7:-1].split(", ", 1)
@@ -188,12 +188,12 @@ class HBNBCommand(cmd.Cmd):
                             line = f"{cls} {args[0][1:-1]} {key} {value}"
                         else:
                             line = f"{cls} {args[0][1:-1]} {key} \"{value}\""
-                        self.update(line)
+                        self.do_update(line)
                 else:
                     list_method = method.split(", ")
                     line = f"{cls} {list_method[0][8:-1]} \
 {list_method[1][1:-1]} {list_method[2][:-1]}"
-                    self.update(line)
+                    self.do_update(line)
             else:
                 return cmd.Cmd.default(self, line)
         else:

@@ -38,7 +38,7 @@ class BaseModel:
             dt.isoformat(dicto.get('updated_at'))
         return dicto
 
-    def __str__(self) -> str:   
+    def __str__(self) -> str:
         nm = self.__class__.__name__
         return "[{}] ({}) {}".format(nm, self.id, self.__dict__)
 
